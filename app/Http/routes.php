@@ -224,6 +224,19 @@ Route::group(['middleware' => ['auth','role:8']], function () {
 
 	});
 
+Route::group(['middleware' => ['auth','role:9']], function () {
+		// Registration routes...
+	Route::get('register', [
+	'uses' => 'Auth\AuthController@getRegister',
+	'as' => 'register'
+	]);
+
+		Route::post('register', [
+	 'uses' => 'Auth\AuthController@postRegister',
+	 'as' => 'register'
+	]);
+});
+
 
 /*Route::controllers ([
 		'ver' => 'ResulController@show',
@@ -248,16 +261,7 @@ Route::get('logout', [
     'as'   => 'logout'
 ]);
 
-// Registration routes...
-Route::get('register', [
-	'uses' => 'Auth\AuthController@getRegister',
-	'as' => 'register'
-	]);
 
-Route::post('register', [
-	 'uses' => 'Auth\AuthController@postRegister',
-	 'as' => 'register'
-	]);
 
 // Password reset link request routes...
 Route::get('password/email', 'Auth\PasswordController@getEmail');

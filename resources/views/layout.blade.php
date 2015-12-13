@@ -54,9 +54,9 @@
               <li class="dropdown user user-menu">
                <a href="{{route('login')}}">Login</a>
              </li>
-             <li class="dropdown user user-menu">
+            <!-- <li class="dropdown user user-menu">
                <a href="{{route('register')}}">Registrar</a>
-             </li>
+             </li> -->
              @else
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
