@@ -14,6 +14,7 @@
           </div>
         </div>
         @else
+        @include('partials/success')
         @include('menu/boxresol')
         @include('menu/boxconfig')
         @include('menu/boxfact')

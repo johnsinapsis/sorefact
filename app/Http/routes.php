@@ -272,3 +272,44 @@ Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 Route::post('password/reset', 'Auth\PasswordController@postReset');
 
 //Route::get('main', 'MainController@index');
+
+Route::group(['middleware' => 'auth'], function () {
+
+    Route::get('account', function () {
+        return view('account');
+    });
+
+    Route::get('account/password', 'AccountController@getPassword');
+    Route::post('account/password', 'AccountController@postPassword');
+
+    Route::get('account/edit-profile', 'AccountController@editProfile');
+    Route::put('account/edit-profile', 'AccountController@updateProfile');
+
+    Route::group(['middleware' => 'verified'], function () {
+
+        Route::get('publish', function () {
+            return view('publish');
+        });
+        Route::post('publish', function () {
+            return Request::all();
+        });
+
+    });
+
+    Route::group(['middleware' => 'role:admin'], function () {
+
+        Route::get('admin/settings', function () {
+            return view('admin/settings');
+        });
+
+    });
+
+    Route::group(['middleware' => 'role:editor'], function () {
+
+        Route::get('admin/posts', function () {
+            return view('admin/posts');
+        });
+
+    });
+
+});

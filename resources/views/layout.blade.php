@@ -91,6 +91,7 @@
           <ul class="sidebar-menu">
             <li class="header">MENU ADMINISTRADOR</li>
             <li><a href="{{route('register')}}"><i class="fa fa-book"></i> <span>Registrar Usuario</span></a></li>
+            <li><a href="{{url('account/password')}}"><i class="fa fa-key"></i> <span>Cambiar Contraseña</span></a></li>
           </ul>
           @endif
        </aside>
