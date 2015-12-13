@@ -1,0 +1,434 @@
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+a {
+  color: #5D6975;
+  text-decoration: underline;
+}
+
+body {
+  position: relative;
+  /*width: 21cm;  
+  height: 29.7cm; */
+  margin: 0 auto; 
+  color: #001028;
+  background: #FFFFFF; 
+  font-family: Arial, sans-serif; 
+  font-size: 12px; 
+  font-family: Arial;
+}
+
+header {
+  padding: 10px 0;
+  margin-bottom: 30px;
+}
+
+.title{
+  /* position:absolute; */
+  text-align: right;
+  margin-top: -20px;
+  color: #00913E;
+}
+
+.logo {
+  /* width: 150px; */ height: 120px;
+  /* position: absolute; */
+  margin-top: -20px;
+}
+
+.marcagua{
+  width:409px;height:297px;
+  position: absolute;
+  margin-top: 400px;
+  margin-left: 120px;
+  filter:alpha(opacity=25);
+  -moz-opacity:.25;
+  opacity:.25;
+  background: url(marcagua.jpg) no-repeat;
+}
+
+.header{
+    position:relative;
+    width:400px;
+    height:130px;
+    left:150px;
+    top:-20px;
+}
+
+.numfact{
+  position:relative;
+  font-size: 10px;
+    width:190px;
+    height:50px;
+    /* background:yellow; */ 
+    left:535px;
+    top: -60px;
+}
+
+.divnum{
+  position:relative;
+    width:100px;
+    height:30px;
+    color: red;
+    background: white; 
+    left:585px;
+    top:-70px;
+    border: 1px solid;
+    border-radius: 10px;
+    border-color: #A79C9C;
+    z-index: 2;
+}
+
+.cabfact{
+    position:relative; 
+    width:700px;
+    height:130px;
+    color: red;
+    /* background: red; */
+    /* left:570px; */
+    top:-80px;
+    border: 1px solid;
+    border-radius: 10px;
+    border-color: #001028;
+    z-index: 1;
+}
+
+.fecha{
+position: relative;
+width: 100px;
+height: 20px;
+border: 1px solid #00913E; 
+border-collapse: collapse;
+border-radius: 5px;
+top: 10px;
+left: 10px;
+color: black;
+}
+
+.fecha td {
+  border: 1px solid #EEEEEE;
+  padding: 6px;
+}
+
+.fecha tr:first-child td:first-child{
+ border-radius:5px 0px 0px 0px;
+}
+
+.fecha tr:first-child td:last-child{
+ border-radius:0px 5px 0px 0px;
+}
+
+.fecha tr:last-child td:first-child{
+ border-radius:0px 0px 0px 5px;
+}
+
+.fecha tr:last-child td:last-child{
+ border-radius:0px 0px 5px 0px;
+}
+
+.fecven{
+position: relative;
+width: 100px;
+height: 20px;
+border: 1px solid #00913E; 
+border-collapse: collapse;
+border-radius: 5px;
+top: -45px;
+left: 192px;
+color: black;
+}
+
+.fecven td {
+  border: 1px solid #EEEEEE;
+  padding: 6px;
+}
+
+
+.titfec{
+  font-size: 10px;
+  background: #00913E; 
+  border-radius: 5px;
+  color: white;
+}
+
+.resol{
+    position:relative;
+    width:355px;
+    height:50px;
+    text-align: center;
+    color:blue;
+    font-size: 9px;
+    left:346px;
+    top:-98px;
+    /* background: yellow; */
+}
+
+
+.cliente{
+    position:relative;
+    width:100px;
+    height:30px;
+    color: blue;
+    left: 10px;
+    top: -90px;
+    /* background: yellow; */
+}
+
+.nomcli{
+  position:absolute;
+    width:355px;
+    height:15px;
+    color: black;
+    text-align: center;
+    border-bottom: 1px solid;
+    border-color: blue;
+    left: 47px;
+    top:  65px;
+}
+
+.nit{
+  position:absolute;
+    width:50px;
+    height:30px;
+    color: blue;
+    left: 410px;
+    top:  70px;
+}
+
+
+.nomnit{
+  position:absolute;
+    width:250px;
+    height:15px;
+     font-size: 12px;
+    color: black;
+    text-align: center;
+    border-bottom: 1px solid;
+    border-color: blue;
+    left: 430px;
+    top: 65px;
+}
+
+
+.dir{
+  position:absolute;
+    width:50px;
+    height:30px;
+    color: blue;
+    left: 10px;
+    top: 100px;
+}
+
+.nomdir{
+  position:absolute;
+    width:250px;
+    height:15px;
+    font-size: 12px;
+    color: black;
+    text-align: center;
+    border-bottom: 1px solid;
+    border-color: blue;
+    left: 62px;
+    top: 96px;
+}
+
+
+.tel{
+  position:absolute;
+    width:30px;
+    height:30px;
+    color: blue;
+    left: 315px;
+    top: 100px;
+}
+
+.nomtel{
+  position:absolute;
+    width:130px;
+    height:15px;
+    font-size: 12px;
+    color: black;
+    text-align: center;
+    border-bottom: 1px solid;
+    border-color: blue;
+    left: 340px;
+    top: 96px;
+}
+
+.detaserv{
+  position: absolute;
+  width: 700px;
+  left: 1px;
+  top:30px;
+}
+
+
+.pag{
+  position:relative;
+    width:80px;
+    height:30px;
+    color: blue;
+    left: 475px;
+    top: -400px;
+}
+
+.nompag{
+  position:relative;
+    width:130px;
+    height:30px;
+    border-bottom: 1px solid;
+    border-color: blue;
+    left: 550px;
+    top: -449px;
+}
+
+.detfact{
+  position:relative;
+    width:699px;
+    height:600px;
+    border: 1px solid;
+    border-radius: 6px;
+    border-color: #001028;
+    left: 1px;
+    top: -76px;
+}
+
+.detalle{
+width: 700px;
+/* height: 50px; */
+border: 0px solid #001028; 
+border-collapse: collapse;
+color: #001028;
+/* color: red; */
+}
+
+.detalle td {
+  border: 1px solid #001028;
+  border-radius: 6px;
+  padding: 6px;
+}
+
+.titdet{
+ background: #A6E2A8; 
+}
+
+.tittot{
+  position: relative;
+  width: 50px;
+  height: 30px;
+  left:480px;
+  top:-45px;
+}
+
+.valtot{
+position: absolute;
+  width: 150px;
+  height: 50px;
+  left:560px;
+  top: 867px;
+}
+
+.divtot{
+  background: #A6E2A8; 
+  border: 1px solid; 
+  border-radius: 10px; 
+  border-color: #A79C9C; 
+  width:130px; 
+  height:30px; 
+}
+
+.valtotal{
+  position: absolute;
+  top: 8px;
+  left: 25px;
+  width: 100px;
+  text-align: right;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.notafact{
+  position: absolute;
+  width: 350px;
+  height: 50px;
+  left:85px;
+  top: 780px;
+}
+
+
+.titnom{
+  color: blue;
+  vertical-align: bottom;
+  }
+
+.nomrad{
+  position: absolute;
+  width: 410px;
+  height: 50px;
+   left:10px;
+   top: 870px
+}
+
+.divnomrad{
+    width:300px;
+    height:20px;
+    border-bottom: 1px solid;
+    border-color: blue;
+}
+
+.fecrad{
+  position: absolute;
+  width: 410px;
+  height: 50px;
+   left:10px;
+   top: 905px
+}
+
+.divfecrad{
+    width:270px;
+    height:20px;
+    border-bottom: 1px solid;
+    border-color: blue;
+}
+
+.apprad{
+  position: absolute;
+  width: 410px;
+  height: 50px;
+   left:10px;
+   top: 940px
+}
+
+.divapprad{
+    width:300px;
+    height:20px;
+    border-bottom: 1px solid;
+    border-color: blue;
+}
+
+.sello{
+  position: absolute;
+  width: 240px;
+  height: 50px;
+   left:450px;
+   top: 964px;
+   color: #00913E;
+   vertical-align: top;
+    border-top: 1px solid;
+    border-color: blue;
+}
+
+footer {
+  color: #001028;
+  width: 100%;
+  height: 30px;
+  position: absolute;
+  bottom: 0;
+  font-size: 9px; 
+  /* border-top: 1px solid #C1CED9; */
+  padding: 8px 0;
+  text-align: center;
+}
