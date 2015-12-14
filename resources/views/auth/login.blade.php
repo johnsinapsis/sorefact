@@ -15,9 +15,9 @@
             
             {!!Form::token();!!}
             <div class="form-group">
-             {!!Form::label('email', 'Email', array('class' => 'col-md-4 control-label'));!!}    
+             {!!Form::label('login', 'login', array('class' => 'col-md-4 control-label'));!!}    
               <div class="col-md-6">
-             {!!Form::email('email',old('email'),['class'=>'form-control', 'id'=>'inputEmail', 'placeholder'=>'email', 'required'=>'required'])!!}
+             {!!Form::text('login',old('login'),['class'=>'form-control', 'id'=>'inputLogin', 'placeholder'=>'login', 'required'=>'required'])!!}
              </div>
            </div>
             <div class="form-group">
