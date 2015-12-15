@@ -142,6 +142,13 @@
         </div>
      
      </div>
+     @if (isset($numfac))
+        @if($estfac==0)
+            <div class="anu">
+                 {!! Html::image("imagenes/anulada.png", "Fact Anulada", array('class' => 'anu')) !!}
+            </div>
+        @endif
+     @endif
      <div class="notafact">NOTA: {{$nota_factura}}</div>
      <div class="nomrad">
          <table width="350">

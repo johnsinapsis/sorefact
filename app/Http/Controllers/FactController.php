@@ -382,7 +382,7 @@ class FactController extends Controller
     {
         
         //consultar id y fecha    
-        $factura = FacturaCab::select('cod_ent','fecfac')
+        $factura = FacturaCab::select('cod_ent','fecfac','estfac')
                              ->where('numfac',$numfac)
                              ->first();
         $id = $factura->cod_ent;
@@ -417,7 +417,8 @@ class FactController extends Controller
         'dv'          => $dv,
         'dir_ent'     => $entidad->DIR_ENT,
         'tel_ent'     => $entidad->TEL_ENT,
-        'numfac'      => $numfac
+        'numfac'      => $numfac,
+        'estfac'      => $factura->estfac
         ]);
          $pdf = \App::make('dompdf.wrapper');
       $pdf->loadHTML($view);
