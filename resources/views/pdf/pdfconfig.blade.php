@@ -112,8 +112,8 @@
                      <tr>
                          <td align="right" width="49">{{$detalle->cantserv}}</td>
                           <td align="left" width="230">{{$detalle->NOM_SER}}</td>
-                          <td align="right" width="85">{{number_format($detalle->valserv)}}</td>
-                            <td align="right" width="85">{{number_format($detalle->valserv * $detalle->cantserv)}}</td>
+                          <td align="right" width="85">{{number_format($detalle->valserv,2)}}</td>
+                            <td align="right" width="85">{{number_format($detalle->valserv * $detalle->cantserv,2)}}</td>
                      </tr>
                 {{--*/ $tot = $tot + ($detalle->valserv * $detalle->cantserv) /*--}}
                      @endforeach
@@ -122,8 +122,8 @@
                 <tr>
                     <td align="right" width="49">{{$detalle->cantserv}}</td>
                     <td align="left" width="230">{{$detalle->NOM_SER}}</td>
-                    <td align="right" width="85">{{number_format($detalle->valserv)}}</td>
-                    <td align="right" width="85">{{number_format($detalle->valserv * $detalle->cantserv)}}</td>
+                    <td align="right" width="85">{{number_format($detalle->valserv,2)}}</td>
+                    <td align="right" width="85">{{number_format($detalle->valserv * $detalle->cantserv,2)}}</td>
                 </tr>
                 {{--*/ $tot = $tot + ($detalle->valserv * $detalle->cantserv) /*--}}
                         @endforeach
@@ -136,7 +136,7 @@
             <table>
                 <tr>
                     <td><h3>$</h3></td>
-                    <td><div class="divtot"><span class="valtotal">{{number_format($tot)}}</span></div></td>
+                    <td><div class="divtot"><span class="valtotal">{{number_format($tot,2)}}</span></div></td>
                 </tr>
             </table>
         </div>

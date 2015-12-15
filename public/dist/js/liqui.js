@@ -58,9 +58,11 @@ function AgregaFilaServ(){
     var cant   = $("#cantidad").val();
     var valuni = $("#valuni").val();
     var valtot = valuni * cant;
+    valtot = valtot.toFixed(2);
 
     var unit = "$"+formatNumber.new(valuni);
     var total = "$"+formatNumber.new(valtot);
+    //total = total.toFixed(2);
 
     $("#servicio").val("");
     $("#cantidad").val("");

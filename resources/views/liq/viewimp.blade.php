@@ -13,7 +13,7 @@
         
                 <div class="box-header">
                   <i class="fa fa-print"></i>
-                  <h3 class="box-title">Facturación</h3>
+                  <h3 class="box-title">Impresión</h3>
                   
                 </div>
                 <div class="box-body chat" id="chat-box" >
