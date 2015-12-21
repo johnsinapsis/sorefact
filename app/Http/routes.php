@@ -237,6 +237,30 @@ Route::group(['middleware' => ['auth','role:9']], function () {
 	]);
 });
 
+Route::group(['middleware' => ['auth','role:10']], function () { 
+	Route::get('ref/{numfac}',  [
+		'uses' => 'FactController@refact',
+		'as' => 'ref'
+		]);
+	
+	Route::get('ref/pdfprev/{id}/{fecha}', [
+		'uses' => 'FactController@show',
+		'as' => 'pdfprev'
+		]);
+
+	Route::any('ref/liq/fact','FactController@store');
+
+	Route::any('ref/liq/{numfac}',function($numfac){
+	 	return View('liq.viewliq')->with('mensaje','Factura '.$numfac.' liquidada Satisfactoriamente');
+	 });
+
+	Route::get('ref/pdffact/{numfac}', [
+		'uses' => 'FactController@pdfshow',
+		'as' => 'pdffact'
+		]);
+
+});
+
 
 /*Route::controllers ([
 		'ver' => 'ResulController@show',

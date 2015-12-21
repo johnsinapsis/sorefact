@@ -22,10 +22,15 @@
                   <div class="item">
                     {!! Html::image('dist/img/logosore.png', "User image", array('class' => 'online')) !!}
                     <p class="message">
-                      <a href="#" class="name">
+                      @if(isset($info))
+                      <span class="name">
+                        Reliquidación Factura {{$info->numfac}}
+                      </span>
+                      @else
+                      <span class="name">
                         Liquidación de servicios
-                      </a>
-                      
+                      </span>
+                      @endif
                     </p>
                     <div class="attachment">
                       <div id="formresol">
@@ -43,11 +48,17 @@
 
                            <div class="form-group">
                                 <label class="col-md-4 control-label">Entidad:</label>
+                                @if(isset($info))
+                                <div class="input-group input-group-sm">                                 
+                                    <input id="entidad" type="text" class="form-control input-sm" name="entidad"  style="width:230px" value="{{$info->NOM_ENT}}">
+                                    <input type="hidden" id="ident" value="{{$info->COD_ENT}}">  
+                                </div>
+                                @else
                                 <div class="input-group input-group-sm">                                 
                                     <input id="entidad" type="text" class="form-control input-sm" name="entidad"  style="width:230px" >
                                     <input type="hidden" id="ident" value="0">  
                                 </div>
-                                 
+                                @endif 
                             </div>
                             <div class="form-group">
                               <label class="col-md-4 control-label" >Servicio:</label>
@@ -84,7 +95,22 @@
         
  
         <tbody>
-            
+                 @if(isset($info))
+                  @inject('detser','App\Http\Controllers\FactController')
+                  {{--*/ $i = 1 /*--}}
+                  @foreach ($detser->listser($info->numfac) as $detalle)
+                   
+                       <tr data-id="p{{$detalle->idserv}}">
+                         <td>{{$detalle->NOM_SER}}</td>
+                         <td>{{$detalle->cantserv}}</td>
+                          <td>{{number_format($detalle->valserv,2)}}</td>
+                          <td>{{number_format($detalle->valserv * $detalle->cantserv,2)}}</td>
+                          <td>{{$detalle->valserv}}</td>
+                          <td>{{$detalle->valserv * $detalle->cantserv}}</td>
+                     </tr>
+                    {{--*/ $i++ /*--}}
+                  @endforeach
+                 @endif
                   
         </tbody>
     </table>

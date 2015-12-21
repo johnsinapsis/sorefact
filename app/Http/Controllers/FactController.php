@@ -260,18 +260,27 @@ class FactController extends Controller
                            ->orderBy('numfac', 'desc')
                            ->get();
             }
-            // return response()->json($listfac);
-            // return View('liq.viewimp');
-       
-        //var_dump($listfac);
-            // dd($listfac[0]->numfac);
-        //return View('liq.viewimp',$listfac);
+            
 
             return view('liq.viewimp', compact('listfac'));
 
     }
 
 
+    
+    /**
+     * consulta una factura que este anulada para refacturar
+     *
+     * @param  Request  $request
+     * @return Response
+     */
+    public function refact($numfac)
+    {
+        $info = FacturaCab::join('entidades','entidades.COD_ENT','=','factura_cab.cod_ent')
+                            ->select('numfac', 'factura_cab.cod_ent as COD_ENT','NOM_ENT')
+                            ->where('numfac',$numfac)->first();
+      return view('liq.viewliq', compact('info'));                    
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -449,7 +458,7 @@ class FactController extends Controller
     public function listser($numfac)
     {
        $detser =  FacturaDet::join('servicios', 'servicios.COD_SER', '=', 'factura_det.idserv')
-                ->select('cantserv','NOM_SER', 'valserv' )
+                ->select('idserv','cantserv','NOM_SER', 'valserv' )
                 ->where('numfac',$numfac)
                 ->get();
 

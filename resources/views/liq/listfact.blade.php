@@ -57,7 +57,12 @@
                       @endif
                       <!-- General tools such as edit or delete-->
                       <div class="tools">
+                        @if($fact->estfac)
                         <a href="{{route('pdffact',['numfac'=>$fact->numfac])}}" target="_blank"><i class="fa fa-television"></i></a>
+                        @else
+                        <a href="{{route('ref',['numfac'=>$fact->numfac])}}"><i class="fa fa-share"></i></a>
+                        <a href="{{route('pdffact',['numfac'=>$fact->numfac])}}" target="_blank"><i class="fa fa-television"></i></a>
+                        @endif
                       </div>
                     </li>
                     @endforeach  
