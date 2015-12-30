@@ -17,7 +17,10 @@ class CreatePagos extends Migration
             $table->date('fecpago');
             $table->integer('numfac');
             $table->float('valpago');
+            $table->integer('user')->unsigned();
+            $table->timestamps();
             $table->foreign('numfac')->references('numfac')->on('factura_cab');
+            $table->foreign('user')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

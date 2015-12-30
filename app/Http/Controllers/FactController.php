@@ -479,7 +479,7 @@ class FactController extends Controller
                            ->select('factura_cab.numfac as numfac','fecfac', 'factura_cab.cod_ent as COD_ENT','NOM_ENT', 'estfac',DB::raw('sum(cantserv*valserv) as total'))
                            ->groupBy('numfac','fecfac','cod_ent')
                            ->orderBy('numfac', 'desc')
-                           ->take(5)
+                           ->take(10)
                            ->get();
 
         return $listfac; 

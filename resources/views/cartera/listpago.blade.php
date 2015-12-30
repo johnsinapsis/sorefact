@@ -5,7 +5,7 @@
                   @if(isset($listfac))
                   <h3 class="box-title">Facturas resultado de la búsqueda</h3>
                   @else
-                  <h3 class="box-title">Ultimas facturas liquidadas</h3>
+                  <h3 class="box-title">Ultimos pagos registrados</h3>
                   @endif
                   <div class="box-tools pull-right">
                     
@@ -39,8 +39,8 @@
                      @endforeach
                      
                      @else
-                     @inject('fact','App\Http\Controllers\FactController')
-                     @foreach ($fact->toplist() as $fact)
+                     @inject('pago','App\Http\Controllers\PagoController')
+                     @foreach ($pago->toplist() as $pago)
                     <li>
                       <!-- drag handle -->
                       <span class="handle">
@@ -49,20 +49,20 @@
                       </span>
                       
                       <!-- todo text -->
-                      <span class="text" style="font-size: 12px;">Factura: <strong>{{$fact->numfac}}</strong>. Nit: {{$fact->COD_ENT}}. {{$fact->NOM_ENT}}. Total: $ {{number_format($fact->total)}}</span>
+                      <span class="text" style="font-size: 12px;">Factura: <strong>{{$pago->numfac}}</strong>. Fecha Factura: {{Carbon\Carbon::createFromFormat('Y-m-d',$pago->fecfac)->format('Y/m/d')}}. Fecha Pago: {{Carbon\Carbon::createFromFormat('Y-m-d',$pago->fecpago)->format('Y/m/d')}}. {{$pago->NOM_ENT}}. Total pagado: $ {{number_format($pago->valpago)}}</span>
                       <!-- Emphasis label -->
-                     @if($fact->estfac)
+                     @if($pago->estfac)
                       <small class="label label-success"><i class="fa fa-thumbs-up"></i> Activo</small>
                       @else
                       <small class="label label-danger"><i class="fa fa-thumbs-o-down"></i> Inactivo</small>
                       @endif
                       <!-- General tools such as edit or delete-->
                       <div class="tools">
-                        @if($fact->estfac)
-                        <a href="{{route('pdffact',['numfac'=>$fact->numfac])}}" target="_blank"><i class="fa fa-television"></i></a>
+                        @if($pago->estfac)
+                        <a href="{{route('pdffact',['numfac'=>$pago->numfac])}}" target="_blank"><i class="fa fa-television"></i></a>
                         @else
-                        <a href="{{route('ref',['numfac'=>$fact->numfac])}}"><i class="fa fa-share"></i></a>
-                        <a href="{{route('pdffact',['numfac'=>$fact->numfac])}}" target="_blank"><i class="fa fa-television"></i></a>
+                        <a href="{{route('ref',['numfac'=>$pago->numfac])}}"><i class="fa fa-share"></i></a>
+                        <a href="{{route('pdffact',['numfac'=>$pago->numfac])}}" target="_blank"><i class="fa fa-television"></i></a>
                         @endif
                       </div>
                     </li>

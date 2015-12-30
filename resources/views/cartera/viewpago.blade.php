@@ -7,7 +7,7 @@
               @include('partials/success')
               @include('partials/msg-ok')
            
-              {!! Form::open(['class' => 'form-horizontal', 'role' => 'form','method' => 'POST','route' => 'rad']) !!}
+              {!! Form::open(['class' => 'form-horizontal', 'role' => 'form','method' => 'POST','route' => 'pago']) !!}
         
                 <div class="box-header">
                   <i class="fa fa-cogs"></i>
@@ -19,9 +19,9 @@
                   <div class="item">
                     {!! Html::image('dist/img/logosore.png', "User image", array('class' => 'online')) !!}
                     <p class="message">
-                      <a href="#" class="name">
-                        Radicar Facturas
-                      </a>
+                      <span class="name">
+                        Registrar Pago de Facturas
+                      </span>
                       
                     </p>
                     <div class="attachment">
@@ -44,7 +44,15 @@
                                   <input id="fecha" type="date" class="form-control input-sm" name="fecha" min="2015-09-07" max="{{Carbon\Carbon::now()->format('Y-m-d')}}" value="{{Carbon\Carbon::now()->format('Y-m-d')}}"  >    
                                 </div>
                                  
-                            </div>            
+                            </div> 
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Valor del pago:</label>
+                                <div class="input-group input-group-sm">                                 
+                                    <input id="valpago" type="number" class="form-control input-sm" name="valpago" />
+                                </div>
+                                 
+                            </div>           
                             
                       </div>
                         
@@ -60,55 +68,7 @@
                {!! Form::close() !!}
               </div><!-- /.box (chat box) -->
 
-              <!--ültimas facturas -->
-              <div class="box box-primary">
-                <div class="box-header">
-                  <i class="ion ion-clipboard"></i>
-                  <h3 class="box-title">Últimas Facturas liquidadas</h3>
-                  <div class="box-tools pull-right">
-                    <ul class="pagination pagination-sm inline">
-                      <li><a href="#">&laquo;</a></li>
-                      <li><a href="#">1</a></li>
-                      <li><a href="#">2</a></li>
-                      <li><a href="#">3</a></li>
-                      <li><a href="#">&raquo;</a></li>
-                    </ul>
-                  </div>
-                </div><!-- /.box-header -->
-                <div class="box-body">
-                  <ul class="todo-list">
-                     @inject('fact','App\Http\Controllers\FactController')
-                     @foreach ($fact->toplist() as $fact)
-                    <li>
-                      <!-- drag handle -->
-                      <span class="handle">
-                        <i class="fa fa-ellipsis-v"></i>
-                        <i class="fa fa-ellipsis-v"></i>
-                      </span>
-                      
-                      <!-- todo text -->
-                      <span class="text" style="font-size: 12px;">Factura: <strong>{{$fact->numfac}}</strong>. Nit: {{$fact->COD_ENT}}. {{$fact->NOM_ENT}}. Total: $ {{number_format($fact->total)}}</span>
-                      <!-- Emphasis label -->
-                     @if($fact->estfac==2)
-                      <small class="label label-info"><i class="fa fa-thumbs-up"></i> Radicada</small>
-                      @else
-                      @if($fact->estfac==1)
-                         <small class="label label-success"><i class="fa fa-thumbs-o-down"></i> Facturada</small>
-                         @else
-                         <small class="label label-danger"><i class="fa fa-thumbs-o-down"></i> Anulada</small>
-                         @endif
-                      @endif
-                      <!-- General tools such as edit or delete-->
-                      <div class="tools">
-                        <a href="{{route('pdffact',['numfac'=>$fact->numfac])}}" target="_blank"><i class="fa fa-television"></i></a>
-                      </div>
-                    </li>
-                    @endforeach      
-                  </ul>
-                </div><!-- /.box-body -->
-                <div class="box-footer clearfix no-border">
-                </div>
-              </div><!-- /.box -->
+          @include('cartera/listpago')
 
               </section>
           <!-- Fin del componente -->

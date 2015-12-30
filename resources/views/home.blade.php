@@ -21,7 +21,7 @@
         @include('menu/boxanu')
         @include('menu/boxrad')
         @include('menu/boximp')
-        @include('menu/boxrefact')
+        @include('menu/boxpago')
         @endif
       </div>
   </div>

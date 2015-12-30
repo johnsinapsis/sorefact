@@ -261,6 +261,19 @@ Route::group(['middleware' => ['auth','role:10']], function () {
 
 });
 
+Route::group(['middleware' => ['auth','role:11']], function () {
+
+	Route::get('pago', function(){
+		return View('cartera.viewpago');
+	}); 
+
+	Route::post('pago',[
+		'uses' => 'PagoController@store',
+		'as' => 'pago'
+	 
+	]); 
+
+});
 
 /*Route::controllers ([
 		'ver' => 'ResulController@show',
