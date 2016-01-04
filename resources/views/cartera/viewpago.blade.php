@@ -47,6 +47,23 @@
                             </div> 
 
                             <div class="form-group">
+                                <label class="col-md-4 control-label">Concepto:</label>
+                                <div class="input-group input-group-sm">  
+                                   @inject('concepto','App\Http\Controllers\ConcepController')                
+                                    <select name="concepto" id="concepto" class="form-control input-sm">
+                                      @foreach ($concepto->show() as $concepto)
+                                      @if($concepto->id==1)
+                                      <option value="{{$concepto->id}}" selected>{{$concepto->nomtipo}}</option>
+                                      @else
+                                      <option value="{{$concepto->id}}">{{$concepto->nomtipo}}</option>
+                                      @endif
+                                      @endforeach
+                                    </select>
+                                </div>
+                                 
+                            </div>    
+
+                            <div class="form-group">
                                 <label class="col-md-4 control-label">Valor del pago:</label>
                                 <div class="input-group input-group-sm">                                 
                                     <input id="valpago" type="number" class="form-control input-sm" name="valpago" />

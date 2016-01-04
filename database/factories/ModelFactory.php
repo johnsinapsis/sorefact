@@ -55,3 +55,5 @@ $factory->define(App\RoleFuncion::class, function (Faker\Generator $faker) {
         'role' => $faker->randomElement(['superadmin'])
     ];
 });
+
+

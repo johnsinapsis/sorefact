@@ -4,20 +4,21 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Pago extends Model
+class TipoPago extends Model
 {
      /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'pagos';
+    protected $table = 'tipo_pago';
 
      /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['fecpago','numfac','valpago','tipopago','user'];
+    protected $fillable = ['nomtipo','estado'];
 
+    public $timestamps = false;
 }

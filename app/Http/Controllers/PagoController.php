@@ -85,6 +85,7 @@ class PagoController extends Controller
                     'fecpago' => $request->get('fecha'),
                     'numfac' => $request->get('numfac'),
                     'valpago' => $request->get('valpago'),
+                    'tipopago' => $request->get('concepto'),
                     'user' => Auth::user()->id,
                 ]);
             $pago->save();
@@ -103,7 +104,7 @@ class PagoController extends Controller
     {
        $listfac = Pago::join('factura_cab', 'factura_cab.numfac', '=', 'pagos.numfac')
                            ->join('entidades','entidades.COD_ENT','=','factura_cab.cod_ent')
-                           ->select('factura_cab.numfac as numfac','fecfac', 'fecpago','NOM_ENT','valpago')
+                           ->select('factura_cab.numfac as numfac','fecfac', 'fecpago','NOM_ENT','valpago','estfac')
                            ->orderBy('numfac', 'desc')
                            ->take(5)
                            ->get();

@@ -51,10 +51,14 @@
                       <!-- todo text -->
                       <span class="text" style="font-size: 12px;">Factura: <strong>{{$pago->numfac}}</strong>. Fecha Factura: {{Carbon\Carbon::createFromFormat('Y-m-d',$pago->fecfac)->format('Y/m/d')}}. Fecha Pago: {{Carbon\Carbon::createFromFormat('Y-m-d',$pago->fecpago)->format('Y/m/d')}}. {{$pago->NOM_ENT}}. Total pagado: $ {{number_format($pago->valpago)}}</span>
                       <!-- Emphasis label -->
-                     @if($pago->estfac)
-                      <small class="label label-success"><i class="fa fa-thumbs-up"></i> Activo</small>
+                     @if($pago->estfac==1)
+                      <small class="label label-success"><i class="fa fa-thumbs-up"></i> Facturada</small>
                       @else
-                      <small class="label label-danger"><i class="fa fa-thumbs-o-down"></i> Inactivo</small>
+                        @if($pago->estfac==2)
+                        <small class="label label-info"><i class="fa fa-thumbs-o-down"></i> Radicada</small>
+                        @else
+                        <small class="label label-danger"><i class="fa fa-thumbs-o-down"></i> {{Anulada}}</small>
+                        @endif
                       @endif
                       <!-- General tools such as edit or delete-->
                       <div class="tools">
