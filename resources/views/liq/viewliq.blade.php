@@ -166,10 +166,18 @@
                       <!-- todo text -->
                       <span class="text" style="font-size: 12px;">Factura: <strong>{{$fact->numfac}}</strong>. Nit: {{$fact->COD_ENT}}. {{$fact->NOM_ENT}}. Total: $ {{number_format($fact->total)}}</span>
                       <!-- Emphasis label -->
-                      @if($fact->estfac)
-                      <small class="label label-success"><i class="fa fa-thumbs-up"></i> Activo</small>
+                      @if($fact->estfac==1)
+                      <small class="label label-success"><i class="fa fa-thumbs-up"></i> Facturada</small>
                       @else
-                      <small class="label label-danger"><i class="fa fa-thumbs-o-down"></i> Inactivo</small>
+                        @if($fact->estfac==2)
+                        <small class="label label-info"><i class="fa fa-thumbs-o-down"></i> Radicada</small>
+                        @else
+                          @if($fact->estfac==3)
+                          <small class="label label-warning"><i class="fa fa-thumbs-o-down"></i> Pagada</small>
+                          @else
+                          <small class="label label-danger"><i class="fa fa-thumbs-o-down"></i> Anulada</small>
+                          @endif
+                        @endif
                       @endif
                       <!-- General tools such as edit or delete-->
                       <div class="tools">

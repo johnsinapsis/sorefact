@@ -57,7 +57,11 @@
                         @if($pago->estfac==2)
                         <small class="label label-info"><i class="fa fa-thumbs-o-down"></i> Radicada</small>
                         @else
-                        <small class="label label-danger"><i class="fa fa-thumbs-o-down"></i> {{Anulada}}</small>
+                          @if($pago->estfac==3)
+                          <small class="label label-warning"><i class="fa fa-thumbs-o-down"></i> Pagada</small>
+                          @else
+                          <small class="label label-danger"><i class="fa fa-thumbs-o-down"></i> Anulada</small>
+                          @endif
                         @endif
                       @endif
                       <!-- General tools such as edit or delete-->

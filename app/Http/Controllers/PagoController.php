@@ -63,9 +63,12 @@ class PagoController extends Controller
         $pagos = Pago::select(DB::raw('sum(valpago) as total'))
                        ->where('numfac',$request->get('numfac'))
                        ->first();
+        if($pagos)
+        $total = $total - $pagos->total;
         }
         else
         $total=0;
+        //dd($total);
         $mensaje = [
             'fecha.after' => 'La fecha debe ser superior o igual a la fecha de la factura (:date)',
             'numfac.exists' => 'El numero de factura no se encuentra en estado Radicado',
@@ -89,6 +92,11 @@ class PagoController extends Controller
                     'user' => Auth::user()->id,
                 ]);
             $pago->save();
+            if($request->get('valpago')==$total)
+            {
+                FacturaCab::where('numfac',$request->get('numfac'))
+                    ->update(['estfac' => '3']);
+            }
             return View('cartera.viewpago')->with('mensaje','Pago Registrado Satisfactoriamente');
         }
     }
@@ -118,9 +126,46 @@ class PagoController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function show($id)
+    public function show($numfac)
     {
-        //
+        $detalle = FacturaDet::select(DB::raw('sum(cantserv*valserv) as total'))
+                             ->where('numfac',$numfac)
+                             ->first();
+        $total=$detalle->total+0;
+        $pagos = Pago::select(DB::raw('sum(valpago) as total'))
+                       ->where('numfac',$request->get('numfac'))
+                       ->first();
+        if($pagos)
+            $pagado = $pagos->total;
+        else
+            $pagado=0;
+        $total = $total - $pagado;
+        return $total;
+    }
+
+
+     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function totcarte()
+    {
+        $detalle = FacturaDet::join('factura_cab', 'factura_cab.numfac', '=', 'factura_det.numfac')
+                             ->select(DB::raw('sum(cantserv*valserv) as total'))
+                             ->where('factura_cab.estfac','<>','0')
+                             ->first();
+        $total=$detalle->total+0;
+        $pagos = Pago::select(DB::raw('sum(valpago) as total'))
+                       ->where('numfac',$request->get('numfac'))
+                       ->first();
+        if($pagos)
+            $pagado = $pagos->total;
+        else
+            $pagado=0;
+        $total = $total - $pagado;
+        return $total;
     }
 
     /**
