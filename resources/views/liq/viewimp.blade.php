@@ -83,6 +83,29 @@
                                   </label>
                                 </div>
                                  
+                            </div>  
+
+                            <div class="form-group">
+                                
+                               <label class="col-md-4 control-label">Estado:</label>
+                                <div class="input-group col-md-8">                                 
+                                      <input type="radio" class="" name="estado"  value="4" checked/>Todas 
+                                      <input type="radio" class="" name="estado"  value="0"/>Anuladas 
+                                      <input type="radio" class="" name="estado"  value="1"/>Facturadas 
+                                      <input type="radio" class="" name="estado"  value="2"/>Radicadas 
+                                      <input type="radio" class="" name="estado"  value="3"/>Pagadas 
+                                     <!--  <label>
+                                       <input type="radio" class="form-control" name="estado"  value="0" />
+                                     Anuladas
+                                     </label>
+                                                                         
+                                     <label>
+                                       <input type="radio" class="form-control" name="estado"  value="1" />
+                                     Facturadas
+                                     </label> -->
+                                   
+                                </div>
+                                 
                             </div>         
                             
                       </div>

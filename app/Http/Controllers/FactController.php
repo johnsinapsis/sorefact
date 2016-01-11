@@ -152,6 +152,9 @@ class FactController extends Controller
             $fecini = $request->get('fecini');
             $fecfin = $request->get('fecfin');
             $ident = $request->get('ident');
+            $estado = $request->get('estado');
+
+            $raw = "";
 
             $filtro[0] = "";
             $campo[0] = "";
@@ -165,6 +168,9 @@ class FactController extends Controller
                 $fact = 1;
             else
                 $fact = 0;
+            if($fact == 1)
+                $raw = "factura_cab.numfac = ".$factura;
+
             if($ident!=0)
                 $entidad = 1;
             else
@@ -181,14 +187,57 @@ class FactController extends Controller
                 $i++;
             }
             if($entidad==1){
+                if($raw != "")
+                    $raw.=" and ";
+                $raw.=" factura_cab.cod_ent = ".$ident;
                 $campo[$i]="factura_cab.cod_ent";
                 $filtro[$i]= $ident;
                 $i++;
             }
+            if($estado!=4)
+            {
+                if($raw != "")
+                    $raw.=" and ";
+                $raw.="estfac = ".$estado;
+            }
             if($fecha==2)
                 $fecfac = $fecha[0];
-            //dd($filtro[0]);
-            if(($fact==1)&&($fecha==2)&&($entidad==1)){
+            
+            if(($estado!=4)&&($fecha==2)){
+                $listfac = FacturaCab::join('factura_det', 'factura_cab.numfac', '=', 'factura_det.numfac')
+                           ->join('entidades','entidades.COD_ENT','=','factura_cab.cod_ent')
+                           ->select('factura_cab.numfac as numfac','fecfac', 'factura_cab.cod_ent as COD_ENT','NOM_ENT', 'estfac',DB::raw('sum(cantserv*valserv) as total'))
+                           ->whereBetween('fecfac',[$fecini,$fecfin])
+                           ->whereRaw($raw)
+                           ->groupBy('factura_cab.numfac','fecfac','cod_ent')
+                           ->orderBy('factura_cab.numfac', 'desc')
+                           ->get();
+            }
+            if(($estado!=4)&&($fecha==1)){
+
+                $listfac = FacturaCab::join('factura_det', 'factura_cab.numfac', '=', 'factura_det.numfac')
+                           ->join('entidades','entidades.COD_ENT','=','factura_cab.cod_ent')
+                           ->select('factura_cab.numfac as numfac','fecfac', 'factura_cab.cod_ent as COD_ENT','NOM_ENT', 'estfac',DB::raw('sum(cantserv*valserv) as total'))
+                           ->where('fecfac',$fecini)
+                           ->whereRaw($raw)
+                           ->groupBy('factura_cab.numfac','fecfac','cod_ent')
+                           ->orderBy('factura_cab.numfac', 'desc')
+                           ->get();
+            }
+
+            if(($estado!=4)&&($fecha==0)){
+
+                $listfac = FacturaCab::join('factura_det', 'factura_cab.numfac', '=', 'factura_det.numfac')
+                           ->join('entidades','entidades.COD_ENT','=','factura_cab.cod_ent')
+                           ->select('factura_cab.numfac as numfac','fecfac', 'factura_cab.cod_ent as COD_ENT','NOM_ENT', 'estfac',DB::raw('sum(cantserv*valserv) as total'))
+                           ->whereRaw($raw)
+                           ->groupBy('factura_cab.numfac','fecfac','cod_ent')
+                           ->orderBy('factura_cab.numfac', 'desc')
+                           ->take(20)
+                           ->get();
+            }
+
+            if(($fact==1)&&($fecha==2)&&($entidad==1)&&($estado==4)){
             $listfac = FacturaCab::join('factura_det', 'factura_cab.numfac', '=', 'factura_det.numfac')
                            ->join('entidades','entidades.COD_ENT','=','factura_cab.cod_ent')
                            ->select('factura_cab.numfac as numfac','fecfac', 'factura_cab.cod_ent as COD_ENT','NOM_ENT', 'estfac',DB::raw('sum(cantserv*valserv) as total'))
@@ -199,7 +248,7 @@ class FactController extends Controller
                            ->orderBy('numfac', 'desc')
                            ->get();
             }
-            if(($fact==1)&&($fecha==2)&&($entidad==0)){
+            if(($fact==1)&&($fecha==2)&&($entidad==0)&&($estado==4)){
             $listfac = FacturaCab::join('factura_det', 'factura_cab.numfac', '=', 'factura_det.numfac')
                            ->join('entidades','entidades.COD_ENT','=','factura_cab.cod_ent')
                            ->select('factura_cab.numfac as numfac','fecfac', 'factura_cab.cod_ent as COD_ENT','NOM_ENT', 'estfac',DB::raw('sum(cantserv*valserv) as total'))
@@ -209,7 +258,7 @@ class FactController extends Controller
                            ->orderBy('numfac', 'desc')
                            ->get();
             }
-            if(($fact==0)&&($fecha==2)&&($entidad==1)){
+            if(($fact==0)&&($fecha==2)&&($entidad==1)&&($estado==4)){
             $listfac = FacturaCab::join('factura_det', 'factura_cab.numfac', '=', 'factura_det.numfac')
                            ->join('entidades','entidades.COD_ENT','=','factura_cab.cod_ent')
                            ->select('factura_cab.numfac as numfac','fecfac', 'factura_cab.cod_ent as COD_ENT','NOM_ENT', 'estfac',DB::raw('sum(cantserv*valserv) as total'))
@@ -219,7 +268,7 @@ class FactController extends Controller
                            ->orderBy('numfac', 'desc')
                            ->get();
             }
-            if(($fact==0)&&($fecha==2)&&($entidad==0)){
+            if(($fact==0)&&($fecha==2)&&($entidad==0)&&($estado==4)){
             $listfac = FacturaCab::join('factura_det', 'factura_cab.numfac', '=', 'factura_det.numfac')
                            ->join('entidades','entidades.COD_ENT','=','factura_cab.cod_ent')
                            ->select('factura_cab.numfac as numfac','fecfac', 'factura_cab.cod_ent as COD_ENT','NOM_ENT', 'estfac',DB::raw('sum(cantserv*valserv) as total'))
@@ -230,7 +279,7 @@ class FactController extends Controller
                            ->paginate(5);
                            $listfac->setPath('imp/pag');
             }
-            if(($fact==1)&&($fecha==1)&&($entidad==1)){
+            if(($fact==1)&&($fecha==1)&&($entidad==1)&&($estado==4)){
             $listfac = FacturaCab::join('factura_det', 'factura_cab.numfac', '=', 'factura_det.numfac')
                            ->join('entidades','entidades.COD_ENT','=','factura_cab.cod_ent')
                            ->select('factura_cab.numfac as numfac','fecfac', 'factura_cab.cod_ent as COD_ENT','NOM_ENT', 'estfac',DB::raw('sum(cantserv*valserv) as total'))
@@ -241,7 +290,7 @@ class FactController extends Controller
                            ->orderBy('numfac', 'desc')
                            ->get();
             }
-            if(($fact==1)&&($fecha==1)&&($entidad==0)||($fact==0)&&($fecha==1)&&($entidad==1)||($fact==1)&&($fecha==0)&&($entidad==1)){
+            if((($fact==1)&&($fecha==1)&&($entidad==0))||(($fact==0)&&($fecha==1)&&($entidad==1))||(($fact==1)&&($fecha==0)&&($entidad==1))&&($estado==4)){
             $listfac = FacturaCab::join('factura_det', 'factura_cab.numfac', '=', 'factura_det.numfac')
                            ->join('entidades','entidades.COD_ENT','=','factura_cab.cod_ent')
                            ->select('factura_cab.numfac as numfac','fecfac', 'factura_cab.cod_ent as COD_ENT','NOM_ENT', 'estfac',DB::raw('sum(cantserv*valserv) as total'))

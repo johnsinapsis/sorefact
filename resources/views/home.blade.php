@@ -22,6 +22,7 @@
         @include('menu/boxrad')
         @include('menu/boximp')
         @include('menu/boxpago')
+        @include('menu/boxinfo')
         @endif
       </div>
   </div>

@@ -275,6 +275,20 @@ Route::group(['middleware' => ['auth','role:11']], function () {
 
 });
 
+Route::group(['middleware' => ['auth','role:12']], function () {
+
+	Route::get('informes', function(){
+		return View('cartera.viewinfo');
+	}); 
+
+	Route::post('informes',[
+		'uses' => 'PagoController@store',
+		'as' => 'informes'
+	 
+	]); 
+
+});
+
 /*Route::controllers ([
 		'ver' => 'ResulController@show',
 	]);*/
