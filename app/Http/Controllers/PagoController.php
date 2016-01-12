@@ -143,6 +143,53 @@ class PagoController extends Controller
         return $total;
     }
 
+     /**
+     * Display the specified resource.
+     *
+     * @param  Request 
+     * @return Response
+     */
+    public function querypago(Request $request)
+    {
+        $factura = $request->get('numfac');
+        $fecini = $request->get('fecini');
+        $fecfin = $request->get('fecfin');
+        $ident = $request->get('ident');
+        $raw = "";
+        if(($fecini!="")&&($fecfin!=""))
+            $fecha = 2;
+        if(($fecini!="")&&($fecfin==""))
+            $fecha = 1;
+        if(($fecini=="")&&($fecfin==""))
+            $fecha = 0;
+        if($factura!="")
+            $raw = "factura_cab.numfac = ".$factura;
+        if($ident!=0){
+            if($raw != "")
+                $raw.=" and ";
+            $raw.=" factura_cab.cod_ent = ".$ident;
+        }
+
+        if(($fecha==2)&&($raw!="")){
+            $listpago = Pago::join('factura_cab', 'factura_cab.numfac', '=', 'pagos.numfac')
+                           ->join('entidades','entidades.COD_ENT','=','factura_cab.cod_ent')
+                           ->select('factura_cab.numfac as numfac','fecfac', 'fecpago','NOM_ENT','valpago','estfac')
+                           ->whereBetween('fecpago',[$fecini,$fecfin])
+                           ->whereRaw($raw)
+                           ->orderBy('factura_cab.numfac', 'desc')
+                           ->get();
+        }
+        if(($fecha==2)&&($raw=="")){
+            $listpago = Pago::join('factura_cab', 'factura_cab.numfac', '=', 'pagos.numfac')
+                           ->join('entidades','entidades.COD_ENT','=','factura_cab.cod_ent')
+                           ->select('factura_cab.numfac as numfac','fecfac', 'fecpago','NOM_ENT','valpago','estfac')
+                           ->whereBetween('fecpago',[$fecini,$fecfin])
+                           ->orderBy('factura_cab.numfac', 'desc')
+                           ->get();
+        }
+        
+    }
+
 
      /**
      * Display the specified resource.

@@ -287,6 +287,17 @@ Route::group(['middleware' => ['auth','role:12']], function () {
 	 
 	]); 
 
+	Route::get('infopago', function(){
+		return View('cartera.viewinfpago');
+	}); 
+
+	Route::post('infopago',[
+		'uses' => 'PagoController@querypago',
+		'as' => 'infopago'
+	 
+	]); 
+
+
 });
 
 /*Route::controllers ([

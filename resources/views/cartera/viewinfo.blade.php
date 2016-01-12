@@ -6,7 +6,7 @@
                 <span class="info-box-icon bg-aqua"><i class="fa fa-university"></i></span>
                 <div class="info-box-content">
                   <span class="info-box-text">Cartera</span>
-                  <span class="info-box-number">Pagos Realizados</span>
+                  <span class="info-box-number"><a style="color:black;" href="{{route('infopago')}}">Pagos Realizados</a></span>
                 </div><!-- /.info-box-content -->
               </div><!-- /.info-box -->
             </div><!-- /.col -->
