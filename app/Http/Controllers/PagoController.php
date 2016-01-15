@@ -15,6 +15,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PagoController extends Controller
 {
@@ -173,7 +174,8 @@ class PagoController extends Controller
         if(($fecha==2)&&($raw!="")){
             $listpago = Pago::join('factura_cab', 'factura_cab.numfac', '=', 'pagos.numfac')
                            ->join('entidades','entidades.COD_ENT','=','factura_cab.cod_ent')
-                           ->select('factura_cab.numfac as numfac','fecfac', 'fecpago','NOM_ENT','valpago','estfac')
+                           ->join('tipo_pago','pagos.tipopago','=','tipo_pago.id')
+                           ->select('factura_cab.numfac as Factura','fecfac', 'fecpago','NOM_ENT','nomtipo','valpago','estfac')
                            ->whereBetween('fecpago',[$fecini,$fecfin])
                            ->whereRaw($raw)
                            ->orderBy('factura_cab.numfac', 'desc')
@@ -182,17 +184,82 @@ class PagoController extends Controller
         if(($fecha==2)&&($raw=="")){
             $listpago = Pago::join('factura_cab', 'factura_cab.numfac', '=', 'pagos.numfac')
                            ->join('entidades','entidades.COD_ENT','=','factura_cab.cod_ent')
-                           ->select('factura_cab.numfac as numfac','fecfac', 'fecpago','NOM_ENT','valpago','estfac')
+                           ->join('tipo_pago','pagos.tipopago','=','tipo_pago.id')
+                           ->select('factura_cab.numfac as Factura','fecfac as Fecha_Factura', 'fecpago as Fecha_Pago','NOM_ENT as Entidad','nomtipo as Tipo de Pago','valpago as Valor','estfac')
                            ->whereBetween('fecpago',[$fecini,$fecfin])
                            ->orderBy('factura_cab.numfac', 'desc')
                            ->get();
         }
-        
+        if(($fecha==1)&&($raw!="")){
+            $listpago = Pago::join('factura_cab', 'factura_cab.numfac', '=', 'pagos.numfac')
+                           ->join('entidades','entidades.COD_ENT','=','factura_cab.cod_ent')
+                           ->join('tipo_pago','pagos.tipopago','=','tipo_pago.id')
+                           ->select('factura_cab.numfac as Factura','fecfac', 'fecpago','NOM_ENT','nomtipo','valpago','estfac')
+                           ->where('fecpago',$fecini)
+                           ->whereRaw($raw)
+                           ->orderBy('factura_cab.numfac', 'desc')
+                           ->get();
+        }
+        if(($fecha==1)&&($raw=="")){
+            $listpago = Pago::join('factura_cab', 'factura_cab.numfac', '=', 'pagos.numfac')
+                           ->join('entidades','entidades.COD_ENT','=','factura_cab.cod_ent')
+                           ->join('tipo_pago','pagos.tipopago','=','tipo_pago.id')
+                           ->select('factura_cab.numfac as Factura','fecfac', 'fecpago','NOM_ENT','nomtipo','valpago','estfac')
+                           ->where('fecpago',$fecini)
+                           ->orderBy('factura_cab.numfac', 'desc')
+                           ->get();
+        }
+        if(($fecha==0)&&($raw!="")){
+            $listpago = Pago::join('factura_cab', 'factura_cab.numfac', '=', 'pagos.numfac')
+                           ->join('entidades','entidades.COD_ENT','=','factura_cab.cod_ent')
+                           ->join('tipo_pago','pagos.tipopago','=','tipo_pago.id')
+                           ->select('factura_cab.numfac as Factura','fecfac as Fecha_Factura', 'fecpago','NOM_ENT','nomtipo','valpago','estfac')
+                           ->whereRaw($raw)
+                           ->orderBy('factura_cab.numfac', 'desc')
+                           ->get();
+        }
+         
+        //dd($fecha);
+         if(($fecha==0)&&($raw=="")){
+            return redirect()->back()->withInput()->withErrors('No realizó ningun filtro');
+         }
+
+        else{
+
+        $numreg = count($listpago); 
+        $numreg ++;
+        $rango = "A1:G".$numreg;
+
+        Excel::create('Informe Pagos', function($excel) use ($listpago,$rango) {
+ 
+            $excel->sheet('Pagos', function($sheet) use ($listpago,$rango) {
+ 
+                //$products = Product::all();
+ 
+                $sheet->fromArray($listpago);
+
+                // Set black background
+                $sheet->row(1, function($row) {
+
+                 // call cell manipulation methods
+                        $row->setBackground('#45A9E3');
+
+                });
+
+                // Set border for range
+                $sheet->setBorder($rango, 'thin');
+
+                $sheet->setAutoFilter();
+ 
+            });
+        })->export('xls');
+     }
+
     }
 
 
      /**
-     * Display the specified resource.
+     * Muestra el total de la cartera
      *
      * @param  int  $id
      * @return Response
@@ -202,10 +269,10 @@ class PagoController extends Controller
         $detalle = FacturaDet::join('factura_cab', 'factura_cab.numfac', '=', 'factura_det.numfac')
                              ->select(DB::raw('sum(cantserv*valserv) as total'))
                              ->where('factura_cab.estfac','<>','0')
+                             ->where('factura_cab.estfac','<>','1')
                              ->first();
         $total=$detalle->total+0;
         $pagos = Pago::select(DB::raw('sum(valpago) as total'))
-                       ->where('numfac',$request->get('numfac'))
                        ->first();
         if($pagos)
             $pagado = $pagos->total;

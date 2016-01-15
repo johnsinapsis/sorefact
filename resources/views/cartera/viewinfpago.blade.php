@@ -12,8 +12,8 @@
                         -->
         
                 <div class="box-header">
-                  <i class="fa fa-print"></i>
-                  <h3 class="box-title">Impresión</h3>
+                  <i class="fa fa-file-excel-o"></i>
+                  <h3 class="box-title">Exportación</h3>
                   
                 </div>
                 <div class="box-body chat" id="chat-box" >
@@ -126,8 +126,8 @@
 
               </section>
           <!-- Fin del componente -->
-          @inject('resolucion','App\Http\Controllers\ResulController')
-          @include('resol/actresol')
+          @inject('cartera','App\Http\Controllers\PagoController')
+          @include('cartera/actcarte')
 @endsection
 
 

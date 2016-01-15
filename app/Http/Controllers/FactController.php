@@ -42,7 +42,7 @@ class FactController extends Controller
     {
         //$date = Carbon::now()->format('Y-m-d');
         $v = \Validator::make($request->all(),[
-            'numfac' => 'required|numeric|exists:factura_cab,numfac,estfac,1',
+            'numfac' => 'required|numeric|exists:factura_cab,numfac',
             'motianu' => 'required|numeric|exists:motivo_anu,id'
             ]);
          if ($v->fails())
@@ -51,6 +51,13 @@ class FactController extends Controller
         }
         else{
             
+            $factura = FacturaCab::select('estfac')
+                                ->where('numfac',$request->get('numfac'))
+                              ->first();
+            if(($factura->estfac==0)||($factura->estfac==3)){
+              return redirect()->back()->withInput()->withErrors('Estado de Factura no válido');
+            }
+            else{
             FacturaCab::where('numfac',$request->get('numfac'))
                     ->update([ 
                                 'estfac' => '0',
@@ -60,6 +67,7 @@ class FactController extends Controller
                                 'fecanu' => Carbon::now()->format('Y-m-d')
                         ]);
            return View('liq.viewanu')->with('mensaje','Factura Anulada Satisfactoriamente');
+         }
         }
     }
 
