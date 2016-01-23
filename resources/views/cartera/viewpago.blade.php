@@ -66,7 +66,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Valor del pago:</label>
                                 <div class="input-group input-group-sm">                                 
-                                    <input id="valpago" type="number" class="form-control input-sm" name="valpago" />
+                                    <input id="valpago" type="number" step="0.01" class="form-control input-sm" name="valpago" />
                                 </div>
                                  
                             </div>           

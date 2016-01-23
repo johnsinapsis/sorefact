@@ -23,7 +23,7 @@
                       </span>
                       
                       <!-- todo text -->
-                      <span class="text" style="font-size: 12px;">Factura: <strong>{{$fact->numfac}}</strong>. Nit: {{$fact->COD_ENT}}. {{$fact->NOM_ENT}}. Total: $ {{number_format($fact->total)}}</span>
+                      <span class="text" style="font-size: 12px;">Factura: <strong>{{$fact->numfac}}</strong>. Nit: {{$fact->COD_ENT}}. {{$fact->NOM_ENT}}. Total: $ {{number_format($fact->total,2)}}</span>
                       <!-- Emphasis label -->
                      @if($fact->estfac==1)
                       <small class="label label-success"><i class="fa fa-thumbs-up"></i> Facturada</small>
