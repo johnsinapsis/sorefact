@@ -300,6 +300,30 @@ Route::group(['middleware' => ['auth','role:12']], function () {
 
 });
 
+
+Route::group(['middleware' => ['auth','role:13']], function () {
+		
+	Route::get('anupago', function(){
+		return View('cartera.viewanupago');
+	}); 
+
+		Route::post('anupago', [
+	 'uses' => 'PagoController@listpagoanu',
+	 'as' => 'anupago'
+	]);
+
+	Route::get('borrapago/{id}',  [
+		'uses' => 'PagoController@delete',
+		'as' => 'borrapago'
+		]);
+
+	/*Route::post('borrapago/{id}',[
+		'uses' => 'PagoController@querypago',
+		'as' => 'borrapago'
+	 
+	]); */
+});
+
 /*Route::controllers ([
 		'ver' => 'ResulController@show',
 	]);*/

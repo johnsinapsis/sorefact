@@ -87,11 +87,26 @@
        @else
 
        <aside class="main-sidebar">
-          @if(Auth::user()->role="superadmin")
+          @if(Auth::user()->role=="superadmin")
           <ul class="sidebar-menu">
             <li class="header">MENU ADMINISTRADOR</li>
+            
             <li><a href="{{route('register')}}"><i class="fa fa-book"></i> <span>Registrar Usuario</span></a></li>
             <li><a href="{{url('account/password')}}"><i class="fa fa-key"></i> <span>Cambiar Contraseña</span></a></li>
+
+            <li class="active treeview">
+              <a href="#">
+                <i class="fa fa-files-o"></i>
+                <span>Opciones de Cartera</span>
+                
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{{route('anupago')}}"><i class="fa fa-circle-o"></i> Anular Pagos</a></li>
+                <!-- <li><a href="pages/layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
+                <li><a href="pages/layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
+                <li><a href="pages/layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li> -->
+              </ul>
+            </li>
           </ul>
           @endif
        </aside>
@@ -104,9 +119,10 @@
       @yield('content')
  
       </div><!-- /.content-wrapper -->
-      
 
-      </div>
+      <div class="control-sidebar-bg"></div>
+
+      </div> <!-- ./wrapper -->
 
      
 

@@ -257,6 +257,85 @@ class PagoController extends Controller
 
     }
 
+    public function listpagoanu(Request $request)
+    {
+        $factura = $request->get('numfac');
+        $fecini = $request->get('fecini');
+        $fecfin = $request->get('fecfin');
+        $ident = $request->get('ident');
+        $raw = "";
+        if(($fecini!="")&&($fecfin!=""))
+            $fecha = 2;
+        if(($fecini!="")&&($fecfin==""))
+            $fecha = 1;
+        if(($fecini=="")&&($fecfin==""))
+            $fecha = 0;
+        if($factura!="")
+            $raw = "factura_cab.numfac = ".$factura;
+        if($ident!=0){
+            if($raw != "")
+                $raw.=" and ";
+            $raw.=" factura_cab.cod_ent = ".$ident;
+        }
+
+        if(($fecha==2)&&($raw!="")){
+            $listpago = Pago::join('factura_cab', 'factura_cab.numfac', '=', 'pagos.numfac')
+                           ->join('entidades','entidades.COD_ENT','=','factura_cab.cod_ent')
+                           ->join('tipo_pago','pagos.tipopago','=','tipo_pago.id')
+                           ->select('pagos.id','factura_cab.numfac as Factura','fecfac', 'fecpago','NOM_ENT','nomtipo','valpago','estfac')
+                           ->whereBetween('fecpago',[$fecini,$fecfin])
+                           ->whereRaw($raw)
+                           ->orderBy('factura_cab.numfac', 'desc')
+                           ->get();
+        }
+        if(($fecha==2)&&($raw=="")){
+            $listpago = Pago::join('factura_cab', 'factura_cab.numfac', '=', 'pagos.numfac')
+                           ->join('entidades','entidades.COD_ENT','=','factura_cab.cod_ent')
+                           ->join('tipo_pago','pagos.tipopago','=','tipo_pago.id')
+                           ->select('pagos.id','factura_cab.numfac as Factura','fecfac as Fecha_Factura', 'fecpago as Fecha_Pago','NOM_ENT as Entidad','nomtipo as Tipo de Pago','valpago as Valor','estfac')
+                           ->whereBetween('fecpago',[$fecini,$fecfin])
+                           ->orderBy('factura_cab.numfac', 'desc')
+                           ->get();
+        }
+        if(($fecha==1)&&($raw!="")){
+            $listpago = Pago::join('factura_cab', 'factura_cab.numfac', '=', 'pagos.numfac')
+                           ->join('entidades','entidades.COD_ENT','=','factura_cab.cod_ent')
+                           ->join('tipo_pago','pagos.tipopago','=','tipo_pago.id')
+                           ->select('pagos.id','factura_cab.numfac as Factura','fecfac', 'fecpago','NOM_ENT','nomtipo','valpago','estfac')
+                           ->where('fecpago',$fecini)
+                           ->whereRaw($raw)
+                           ->orderBy('factura_cab.numfac', 'desc')
+                           ->get();
+        }
+        if(($fecha==1)&&($raw=="")){
+            $listpago = Pago::join('factura_cab', 'factura_cab.numfac', '=', 'pagos.numfac')
+                           ->join('entidades','entidades.COD_ENT','=','factura_cab.cod_ent')
+                           ->join('tipo_pago','pagos.tipopago','=','tipo_pago.id')
+                           ->select('pagos.id','factura_cab.numfac as Factura','fecfac', 'fecpago','NOM_ENT','nomtipo','valpago','estfac')
+                           ->where('fecpago',$fecini)
+                           ->orderBy('factura_cab.numfac', 'desc')
+                           ->get();
+        }
+        if(($fecha==0)&&($raw!="")){
+            $listpago = Pago::join('factura_cab', 'factura_cab.numfac', '=', 'pagos.numfac')
+                           ->join('entidades','entidades.COD_ENT','=','factura_cab.cod_ent')
+                           ->join('tipo_pago','pagos.tipopago','=','tipo_pago.id')
+                           ->select('pagos.id','factura_cab.numfac as Factura','fecfac as Fecha_Factura', 'fecpago','NOM_ENT','nomtipo','valpago','estfac')
+                           ->whereRaw($raw)
+                           ->orderBy('factura_cab.numfac', 'desc')
+                           ->get();
+        }
+         
+        //dd($fecha);
+         if(($fecha==0)&&($raw=="")){
+            return redirect()->back()->withInput()->withErrors('No realizó ningun filtro');
+         }
+         else{
+            //return $listpago;
+             return view('cartera.viewanupago', compact('listpago'));
+         }
+    }
+
 
      /**
      * Muestra el total de la cartera
@@ -288,9 +367,10 @@ class PagoController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function edit($id)
+    public function delete($id)
     {
-        //
+        Pago::where('id',$id)->delete();
+        return View('cartera.viewanupago')->with('mensaje','Pago eliminado Satisfactoriamente');
     }
 
     /**

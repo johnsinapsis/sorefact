@@ -280,3 +280,11 @@ function fecmin(){
  $("#fecfin").prop('min', min);
 
 }
+
+
+function anupago(id){
+  if (confirm('¿Estas seguro de eliminar este pago?')){
+    window.location.href = "borrapago/"+id;
+  }
+
+}
