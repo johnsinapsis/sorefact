@@ -146,22 +146,44 @@ class PagoController extends Controller
 
      
      public function queryedad(Request $request){
-        $edad = $request->get('edad');
-        $ident = $request->get('ident');
         $raw="";
-        $listedad = DB::select("select a.*, IFNULL(b.Pagado,0) as Pagado, IFNULL(Facturado-Pagado,0) as Saldo  from
+        $edad = $request->get('edad');
+        switch ($edad) {
+            case '1':
+                $raw = "and DATEDIFF(NOW(),fecrad) <= 60";
+                break;
+
+                case '2':
+                $raw = "and DATEDIFF(NOW(),fecrad) > 60 and DATEDIFF(NOW(),fecrad) <= 90";
+                break;
+
+                case '3':
+                $raw = "and DATEDIFF(NOW(),fecrad) > 90 and DATEDIFF(NOW(),fecrad) <= 120";
+                break;
+
+                case '4':
+                $raw = "and DATEDIFF(NOW(),fecrad) > 120";
+                break;
+            
+            
+        }
+        $ident = $request->get('ident');
+        if ($ident != 0)
+        $raw.= " and factura_cab.cod_ent = '".$ident."'";
+        
+        $listedad = DB::select("select a.*, IFNULL(b.Pagado,0) as Pagado, Facturado-IFNULL(b.Pagado,0) as Saldo  from
 (select factura_cab.cod_ent as cod_ent, NOM_ENT as nom_ent, sum(cantserv*valserv) as Facturado 
 from factura_cab 
 inner join entidades on factura_cab.cod_ent = entidades.COD_ENT
 inner join factura_det on factura_det.numfac = factura_cab.numfac
-where estfac not in (0,3)
+where estfac = 2 ".$raw."
 group by factura_cab.cod_ent, NOM_ENT) as a
 left join 
 (select factura_cab.cod_ent as cod_ent, NOM_ENT as nom_ent, sum(valpago) as Pagado
 from factura_cab 
 inner join entidades on factura_cab.cod_ent = entidades.COD_ENT
 inner join pagos on factura_cab.numfac = pagos.numfac
-where estfac not in (0,3)
+where estfac = 2
 group by factura_cab.cod_ent, NOM_ENT) as b on a.cod_ent = b.cod_ent order by 2");
         
         //dd($listedad);
