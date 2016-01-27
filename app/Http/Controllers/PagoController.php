@@ -144,6 +144,65 @@ class PagoController extends Controller
         return $total;
     }
 
+     
+     public function queryedad(Request $request){
+        $edad = $request->get('edad');
+        $ident = $request->get('ident');
+        $raw="";
+        $listedad = DB::select("select a.*, IFNULL(b.Pagado,0) as Pagado, IFNULL(Facturado-Pagado,0) as Saldo  from
+(select factura_cab.cod_ent as cod_ent, NOM_ENT as nom_ent, sum(cantserv*valserv) as Facturado 
+from factura_cab 
+inner join entidades on factura_cab.cod_ent = entidades.COD_ENT
+inner join factura_det on factura_det.numfac = factura_cab.numfac
+where estfac not in (0,3)
+group by factura_cab.cod_ent, NOM_ENT) as a
+left join 
+(select factura_cab.cod_ent as cod_ent, NOM_ENT as nom_ent, sum(valpago) as Pagado
+from factura_cab 
+inner join entidades on factura_cab.cod_ent = entidades.COD_ENT
+inner join pagos on factura_cab.numfac = pagos.numfac
+where estfac not in (0,3)
+group by factura_cab.cod_ent, NOM_ENT) as b on a.cod_ent = b.cod_ent order by 2");
+        
+        //dd($listedad);
+        $numreg = count($listedad); 
+        $numreg ++;
+        $rango = "A1:E".$numreg;
+        //$listedad = array($listedad);
+        //dd($listedad);
+        $data = array();
+       foreach ($listedad as $result) {
+      $data[] = (array)$result;  
+
+   #or first convert it and then change its properties using 
+   #an array syntax, it's up to you
+}
+//dd($data);
+
+        Excel::create('Cartera por edades', function($excel) use ($data,$rango) {
+ 
+            $excel->sheet('Cartera', function($sheet) use ($data,$rango) {
+ 
+                //$products = Product::all();
+ 
+                $sheet->fromArray($data);
+
+                // Set black background
+                $sheet->row(1, function($row) {
+
+                 // call cell manipulation methods
+                        $row->setBackground('#45A9E3');
+
+                });
+
+                // Set border for range
+                $sheet->setBorder($rango, 'thin');
+
+                $sheet->setAutoFilter();
+ 
+            });
+        })->export('xls');
+     }
      /**
      * Display the specified resource.
      *
@@ -219,7 +278,7 @@ class PagoController extends Controller
                            ->get();
         }
          
-        //dd($fecha);
+         //dd($listpago);
          if(($fecha==0)&&($raw=="")){
             return redirect()->back()->withInput()->withErrors('No realizó ningun filtro');
          }

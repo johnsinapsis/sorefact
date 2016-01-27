@@ -12,10 +12,10 @@
             </div><!-- /.col -->
             <div class="col-md-3 col-sm-6 col-xs-12">
               <div class="info-box">
-                <span class="info-box-icon bg-green"><i class="fa fa-percent"></i></span>
+                <span class="info-box-icon bg-green"><i class="fa fa-suitcase"></i></span>
                 <div class="info-box-content">
                   <span class="info-box-text">Cartera</span>
-                  <span class="info-box-number"><a style="color:black;" href="{{route('infopago')}}">Cartera por edades</span></a>
+                  <span class="info-box-number"><a style="color:black;" href="{{route('infoedad')}}">Cartera por edades</span></a>
                 </div><!-- /.info-box-content -->
               </div><!-- /.info-box -->
             </div><!-- /.col -->

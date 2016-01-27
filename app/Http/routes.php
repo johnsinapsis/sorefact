@@ -297,6 +297,16 @@ Route::group(['middleware' => ['auth','role:12']], function () {
 	 
 	]); 
 
+	Route::get('infoedad', function(){
+		return View('cartera.viewinfedad');
+	}); 
+
+	Route::post('infoedad',[
+		'uses' => 'PagoController@queryedad',
+		'as' => 'infoedad'
+	 
+	]); 
+
 
 });
 
