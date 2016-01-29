@@ -114,6 +114,64 @@ class FactController extends Controller
         }
     }
 
+    
+    public function queryrango(Request $request){
+      $mensaje = [
+            'numfac.exists' => 'El numero de factura no existe',
+            'numfac2.exists' => 'El numero de factura no existe',
+        ];
+        $v = \Validator::make($request->all(),[
+            'numfac' => 'required|numeric|exists:factura_cab,numfac',
+            'numfac2' => 'required|numeric|exists:factura_cab,numfac'
+            ],$mensaje);
+         if ($v->fails())
+        {
+            return redirect()->back()->withInput()->withErrors($v->errors());
+        }
+        else{
+
+            $facini = $request->get('numfac');
+            $facfin = $request->get('numfac2');
+
+            $listfac = FacturaCab::join('factura_det', 'factura_cab.numfac', '=', 'factura_det.numfac')
+                           ->join('entidades','entidades.COD_ENT','=','factura_cab.cod_ent')
+                           ->select('factura_cab.numfac as numfac','fecfac', 'factura_cab.cod_ent as COD_ENT','NOM_ENT', 'estfac',DB::raw('sum(cantserv*valserv) as total'))
+                           ->whereBetween('factura_cab.numfac', [$facini, $facfin])
+                           ->groupBy('factura_cab.numfac','fecfac','cod_ent')
+                           ->orderBy('factura_cab.numfac', 'desc')
+                           ->get();
+            $numreg = count($listfac); 
+        $numreg ++;
+        $rango = "A1:F".$numreg;
+
+        Excel::create('Facturas por radicar', function($excel) use ($listfac,$rango) {
+ 
+            $excel->sheet('Facturas', function($sheet) use ($listfac,$rango) {
+ 
+                //$products = Product::all();
+ 
+                $sheet->fromArray($listfac);
+
+                // Set black background
+                $sheet->row(1, function($row) {
+
+                 // call cell manipulation methods
+                        $row->setBackground('#45A9E3');
+
+                });
+
+                // Set border for range
+                $sheet->setBorder($rango, 'thin');
+
+                $sheet->setAutoFilter();
+ 
+            });
+        })->export('xls');
+
+        }
+
+    }
+
      public function queryrad()
     {
       $listfac = FacturaCab::join('factura_det', 'factura_cab.numfac', '=', 'factura_det.numfac')

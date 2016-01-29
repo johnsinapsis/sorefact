@@ -313,11 +313,15 @@ Route::group(['middleware' => ['auth','role:12']], function () {
 	 
 	]); 
 
-	/*Route::post('inforad',[
-		'uses' => 'FactController@queryedad',
-		'as' => 'inforad'
+	Route::get('inforango', function(){
+		return View('cartera.viewinfrango');
+	}); 
+
+	Route::post('inforango',[
+		'uses' => 'FactController@queryrango',
+		'as' => 'inforango'
 	 
-	]); */
+	]);
 
 
 });

@@ -7,7 +7,7 @@
               @include('partials/success')
               @include('partials/msg-ok')
            
-              {!! Form::open(['class' => 'form-horizontal', 'role' => 'form', 'url' => 'inforad']) !!}
+              {!! Form::open(['class' => 'form-horizontal', 'role' => 'form', 'url' => 'inforango']) !!}
                <!-- {!! Form::open(['class' => 'form-horizontal', 'role' => 'form','method' => 'POST','route' => 'imp']) !!}
                         -->
         
@@ -34,7 +34,7 @@
                            
                            <div class="form-group">
                                
-                                <label class="col-md-4 control-label">Número de Factura:</label>
+                                <label class="col-md-4 control-label">Desde la Factura:</label>
                                 <div class="input-group col-md-8">                                 
                                     <input id="numfac" type="number" class="form-control input-sm" name="numfac"   style="width:130px" />
                                     <label class="col-md-1 control-label" style="margin-left:10px; padding-left:3px;">
@@ -48,42 +48,21 @@
                             </div>
 
 
-                           <div class="form-group">
-                            
-                                <label class="col-md-4 control-label">Fecha Inicial:</label>
-                                <div class="input-group col-md-8">                                 
-                                  <input id="fecini" type="date" class="form-control input-sm" name="fecini" min="2015-09-07" max="{{Carbon\Carbon::now()->format('Y-m-d')}}" value=""  style="width:130px;" disabled/> 
-                                  <label class="col-md-1 control-label" style="margin-left:10px; padding-left:3px;">
-                                <input type="checkbox" name="inifec" onclick="queryfact('2');" id="inifec">
-                                 </label>   
-                                </div>
-                                
-                            </div>   
-
-                             <div class="form-group">
-                              
-                                <label class="col-md-4 control-label">Fecha Final:</label>
-                                <div class="input-group col-md-8">                                 
-                                  <input id="fecfin" type="date" onfocus="fecmin()" class="form-control input-sm" name="fecfin" min="2015-09-07" max="{{Carbon\Carbon::now()->format('Y-m-d')}}" value="" style="width:130px;" disabled/> 
-                                   <label class="col-md-1 control-label" style="margin-left:10px; padding-left:3px;">
-                                  <input type="checkbox" name="finfec"  onclick="queryfact('3');" id="finfec"> 
-                                  </label>  
-                                </div>
-                                 
-                            </div>    
-
                             <div class="form-group">
-                                
-                                <label class="col-md-4 control-label">Entidad:</label>
+                               
+                                <label class="col-md-4 control-label">Hasta la Factura:</label>
                                 <div class="input-group col-md-8">                                 
-                                    <input id="entidad" type="text" class="form-control input-sm" name="entidad"  style="width:230px"/>
-                                    <input type="hidden" name="ident" id="ident" value="0"> 
+                                    <input id="numfac2" type="number" class="form-control input-sm" name="numfac2"   style="width:130px" />
                                     <label class="col-md-1 control-label" style="margin-left:10px; padding-left:3px;">
-                                    <!-- <input type="checkbox" name="enti"  onclick="queryfact('4');" id="enti"> -->
-                                  </label>
+                                   <!-- <input id="fact" type="checkbox" onclick="queryfact('1');" class=""  name="fact" >   -->  
+                                   </label>
+                                   
                                 </div>
+                               
+                            
                                  
-                            </div>  
+                            </div>
+         
       
                             
                       </div>
