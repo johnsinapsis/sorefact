@@ -307,6 +307,18 @@ Route::group(['middleware' => ['auth','role:12']], function () {
 	 
 	]); 
 
+	Route::get('inforad',[
+		'uses' => 'FactController@queryrad',
+		'as' => 'inforad'
+	 
+	]); 
+
+	/*Route::post('inforad',[
+		'uses' => 'FactController@queryedad',
+		'as' => 'inforad'
+	 
+	]); */
+
 
 });
 
